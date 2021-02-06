@@ -2,6 +2,12 @@
 # Makefile for the linux FAT12/16/32(VFAT)/64(exFAT) filesystem driver.
 #
 
+# Disable warning for Clang
+ifeq ($(cc-name),clang)
+EXTRA_CFLAGS += $(call cc-disable-warning, visibility) \
+				$(call cc-disable-warning, incompatible-function-pointer-types)
+endif
+
 obj-$(CONFIG_SDFAT_FS) += sdfat_fs.o
 
 sdfat_fs-objs	:= sdfat.o core.o core_fat.o core_exfat.o api.o blkdev.o \
